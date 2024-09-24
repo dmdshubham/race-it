@@ -9,7 +9,7 @@ const AddProductModal: React.FC<any> = ({ onClose }) => {
   const router = useRouter();
 
   const [customerName, setCustomerName] = useState("");
-  const [paymentMode, setPaymentMode] = useState("");
+  const [paymentMode, setPaymentMode] = useState("COD");
   const [customerAddress, setCustomerAddress] = useState("");
   const [customerLocality, setCustomerLocality] = useState("");
   const [customerContact, setCustomerContact] = useState("");
