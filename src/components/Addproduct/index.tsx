@@ -71,6 +71,7 @@ const AddProductModal: React.FC<any> = ({ onClose }) => {
                 required
               />
             </div>
+
             <div className="mb-4">
               <label
                 className="mb-2 block text-sm font-bold text-gray-700"
@@ -78,15 +79,16 @@ const AddProductModal: React.FC<any> = ({ onClose }) => {
               >
                 Payment mode
               </label>
-              <input
+              <select
                 id="paymentMode"
-                type="text"
                 className="w-full rounded border border-gray-300 p-2"
                 value={paymentMode}
                 onChange={(e) => setPaymentMode(e.target.value)}
-                placeholder="Enter Payment mode"
                 required
-              />
+              >
+                <option value="COD">COD</option>
+                <option value="Online">Online</option>
+              </select>
             </div>
 
             {/* Second row */}

@@ -42,8 +42,6 @@ const TableOne: React.FC<any> = ({ orders, orderStatus = "New" }) => {
     initialData: orders, // Pass initial data from server-side (if you need it)
   });
 
-  console.log("🚀 ~ data:", data);
-
   const { mutate: deleteOrder } = useMutation({
     mutationFn: (id: string) => fetcher.delete(`/api/v1/orders/${id}`),
     onSuccess: ({ data }) => {
@@ -65,6 +63,21 @@ const TableOne: React.FC<any> = ({ orders, orderStatus = "New" }) => {
     setIsEditModalOpen(true);
   }, []);
 
+  const formatISODate = (isoString: any) => {
+    const date = new Date(isoString);
+
+    return date.toLocaleString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: true,
+    });
+  };
+
   return (
     <div>
       {data?.length > 0 ? (
@@ -80,7 +93,7 @@ const TableOne: React.FC<any> = ({ orders, orderStatus = "New" }) => {
                   "Amount",
                   "Payment Mode",
                   "Status",
-                  "Action",
+                  "Order date",
                 ].map((header, index) => (
                   <div className="px-2 pb-3.5 text-center" key={index}>
                     <h5 className="text-sm font-medium uppercase xsm:text-sm">
@@ -135,6 +148,11 @@ const TableOne: React.FC<any> = ({ orders, orderStatus = "New" }) => {
                     </p>
                   </div>
                   <div className="hidden items-center justify-center px-2 py-4 sm:flex">
+                    <p className="font-medium text-dark dark:text-white">
+                      {formatISODate(item?.attributes?.createdAt)}
+                    </p>
+                  </div>
+                  {/* <div className="hidden items-center justify-center px-2 py-4 sm:flex">
                     <p
                       onClick={() => handleEdit(item)}
                       className=" cursor-pointer font-medium text-dark dark:text-white"
@@ -149,7 +167,7 @@ const TableOne: React.FC<any> = ({ orders, orderStatus = "New" }) => {
                       {" "}
                       Delete
                     </p>
-                  </div>
+                  </div> */}
                 </div>
               ))}
             </div>

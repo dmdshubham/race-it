@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
@@ -9,6 +9,8 @@ const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const router = useRouter(); // Use Next.js router for navigation
   const pathname = usePathname(); // Get the current pathname
+
+  const [storeInfo, setStoreInfo] = useState<any>({});
 
   const cookiesToRemove = ["isLoggedIn", "token", "attributes"];
 
@@ -23,6 +25,12 @@ const DropdownUser = () => {
     router.push("/signin");
   };
 
+  useEffect(() => {
+    const temp = Cookies.get("attributes");
+    const cookiesData = JSON.parse(temp as string);
+    setStoreInfo(cookiesData);
+  }, []);
+
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <Link
@@ -30,7 +38,7 @@ const DropdownUser = () => {
         className="flex items-center gap-4"
         href="#"
       >
-        <span className="h-12 w-12 rounded-full">
+        {/* <span className="h-12 w-12 rounded-full">
           <Image
             width={112}
             height={112}
@@ -42,10 +50,10 @@ const DropdownUser = () => {
             alt="User"
             className="overflow-hidden rounded-full"
           />
-        </span>
+        </span> */}
 
         <span className="flex items-center gap-2 font-medium text-dark dark:text-dark-6">
-          <span className="hidden lg:block">Jhon Smith</span>
+          <span className="hidden lg:block">{storeInfo?.storeName}</span>
 
           <svg
             className={`fill-current duration-200 ease-in ${dropdownOpen && "rotate-180"}`}
@@ -71,7 +79,7 @@ const DropdownUser = () => {
           className={`absolute right-0 mt-7.5 flex w-[280px] flex-col rounded-lg border-[0.5px] border-stroke bg-white shadow-default dark:border-dark-3 dark:bg-gray-dark`}
         >
           <div className="flex items-center gap-2.5 px-5 pb-5.5 pt-3.5">
-            <span className="relative block h-12 w-12 rounded-full">
+            {/* <span className="relative block h-12 w-12 rounded-full">
               <Image
                 width={112}
                 height={112}
@@ -84,14 +92,14 @@ const DropdownUser = () => {
                 className="overflow-hidden rounded-full"
               />
               <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-green dark:border-gray-dark"></span>
-            </span>
+            </span> */}
 
             <span className="block">
               <span className="block font-medium text-dark dark:text-white">
-                Jhon Smith
+                {storeInfo?.storeName}
               </span>
               <span className="block font-medium text-dark-5 dark:text-dark-6">
-                jonson@nextadmin.com
+                {storeInfo?.storelogin_phone}
               </span>
             </span>
           </div>
